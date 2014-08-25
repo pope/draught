@@ -1,0 +1,10 @@
+name: ffapp
+description: A sample web application
+dependencies:
+  core_elements: any
+  paper_elements: any
+  polymer: any
+  unittest: any
+transformers:
+- polymer:
+    entry_points: web/index.html

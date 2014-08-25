@@ -1,0 +1,9 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+<polymer-element name="lorem-ipsum" attributes="paragraphs">
+  <template>
+    <template bind repeat="{{ paragraphList }}">
+      <p>{{ }}</p>
+    </template>
+  </template>
+  <script type="application/dart" src="lorem_ipsum.dart"></script>
+</polymer-element>

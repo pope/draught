@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FF • Destroy Sameer</title>
+    <script src="packages/web_components/platform.js"></script>
+    <script src="packages/web_components/dart_support.js"></script>
+    <link rel="import" href="elements/my_filtered_list.html">
+    <link rel="import" href="elements/lorem_ipsum.html">
+  </head>
+  <body unresolved fullbleed vertical layout>
+    <my-filtered-list items='[{"name":"Foo","checked":false},{"name":"Bar","checked":false},{"name":"Baz","checked":true}]'></my-filtered-list>
+    <lorem-ipsum paragraphs="2"></lorem-ipsum>
+    <script type="application/dart">export 'package:polymer/init.dart';</script>
+  </body>
+</html>
