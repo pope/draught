@@ -13,7 +13,7 @@ class FfAppElement extends PolymerElement {
   @override
   void attached() {
     super.attached();
-    new Roster().load().then((r) => roster = r,
-                             onError: (e) => errorMessage = e.toString());
+    loadRoster().then((r) => roster = r,
+                      onError: (e) => errorMessage = e.toString());
   }
 }

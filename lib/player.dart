@@ -53,35 +53,36 @@ class Player extends Observable {
   }
 }
 
-// TODO(pope): Don't make this model ALSO the service that loads it.
-class Roster extends Observable {
+class Roster {
 
-  static const String _name = 'ff-players';
+  final Iterable<Player> players;
+  final Stream<List<ChangeRecord>> playerChanges;
 
-  List<Player> _players;
-  Stream<List<ChangeRecord>> _playerChanges;
+  Roster(this.players, this.playerChanges) : super();
+}
 
-  @observable Iterable<Player> get players => _players;
-  Stream<List<ChangeRecord>> get playerChanges => _playerChanges;
+const String _name = 'ff-players';
+Roster _roster = null;
 
-  Future<Roster> load() {
-    if (_players != null) {
-      return new Future.value(this);
-    }
-    var jsonFuture = window.localStorage.containsKey(_name) ?
-        new Future.value(window.localStorage[_name]) :
-        HttpRequest.getString('2014-draft-info.json');
-    return jsonFuture.then((json) {
-      _players = toObservable(JSON.decode(json).map((p) =>
-          new Player.fromRaw(p)));
-      _playerChanges = unify(_players.map((p) => p.changes), broadcast: true);
-      _playerChanges.listen((_) => save());
-      return this;
-    });
+Future<Roster> loadRoster() {
+  if (_roster != null) {
+    return new Future.value(_roster);
   }
+  var jsonFuture = window.localStorage.containsKey(_name) ?
+      new Future.value(window.localStorage[_name]) :
+      HttpRequest.getString('2014-draft-info.json');
+  return jsonFuture.then((json) {
+    List<Player> players = toObservable(JSON.decode(json).map((p) =>
+        new Player.fromRaw(p)));
+    Stream<List<ChangeRecord>> playerChanges =
+        unify(players.map((p) => p.changes), broadcast: true);
+    _roster = new Roster(players, playerChanges);
+    playerChanges.listen((_) => _save());
+    return _roster;
+  });
+}
 
-  void save() {
-    window.localStorage[_name] =
-        JSON.encode(players.map((p) => p.toRaw()).toList());
-  }
+void _save() {
+  window.localStorage[_name] =
+      JSON.encode(_roster.players.map((p) => p.toRaw()).toList());
 }
