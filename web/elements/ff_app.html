@@ -1,6 +1,5 @@
 <link rel="import" href="../packages/paper_elements/paper_shadow.html">
 <link rel="import" href="../packages/polymer/polymer.html">
-<link rel="import" href="ff_app_data.html">
 <link rel="import" href="ff_position_stats.html">
 <link rel="import" href="ff_draft_stats.html">
 <link rel="import" href="ff_player_list.html">
@@ -27,21 +26,25 @@
         font-size: 0.8em;
       }
     </style>
-    <ff-app-data players="{{ players }}"></ff-app-data>
-    <div horizontal layout>
-      <section flex>
-        <paper-shadow z="1"></paper-shadow>
-        <ff-player-list flex players="{{ players }}"></ff-player-list>
-      </section>
-      <aside>
-        <h1>Stats</h1>
-        <ff-draft-stats players="{{ players }}"></ff-draft-stats>
-        <template repeat="{{ pos in positions }}">
-          <ff-position-stats position="{{ pos }}"
-                             players="{{ players }}"></ff-position-stats>
-        </template>
-      </aside>
-    </div>
+    <template bind if="{{ roster != null }}">
+      <div horizontal layout>
+        <section flex>
+          <paper-shadow z="1"></paper-shadow>
+          <ff-player-list flex roster="{{ roster }}"></ff-player-list>
+        </section>
+        <aside>
+          <h1>Stats</h1>
+          <ff-draft-stats roster="{{ roster }}"></ff-draft-stats>
+          <template repeat="{{ pos in positions }}">
+            <ff-position-stats position="{{ pos }}"
+                               roster="{{ roster }}"></ff-position-stats>
+          </template>
+        </aside>
+      </div>
+    </template>
+    <template bind if="{{ roster == null }}">
+      Loading...
+    </template>
   </template>
   <script type="application/dart" src="ff_app.dart"></script>
 </polymer-element>

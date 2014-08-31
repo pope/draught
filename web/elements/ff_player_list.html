@@ -22,7 +22,7 @@
         <paper-checkbox flex checked="{{ filterDrafted }}" label="Ignore Drafted"></paper-checkbox>
       </div>
       <ol>
-        <template repeat="{{ p in players | search(searchText) }}">
+        <template repeat="{{ p in roster.players | search(searchText) }}">
           <li hidden?="{{ filterDrafted &amp;&amp; p.isDrafted }}"><ff-player player="{{ p }}"></ff-player></li>
         </template>
       </ol>

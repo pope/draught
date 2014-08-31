@@ -4,7 +4,7 @@ import 'package:ffapp/player.dart';
 @CustomTag('ff-player-list')
 class FfPlayerListElement extends PolymerElement {
 
-  @published Iterable<Player> players;
+  @published Roster roster;
   @observable bool filterDrafted = true;
   @observable String searchText = '';
 

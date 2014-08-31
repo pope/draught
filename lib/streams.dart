@@ -2,7 +2,7 @@ library streams;
 
 import 'dart:async';
 
-Stream unify(Iterable<Stream> sources) {
+Stream unify(Iterable<Stream> sources, {broadcast: false}) {
   List<StreamSubscription> subscriptions;
   StreamController controller;
 
@@ -31,11 +31,17 @@ Stream unify(Iterable<Stream> sources) {
   void onResume() => subscriptions.forEach((s) => s.resume());
   void onPause() => subscriptions.forEach((s) => s.pause());
 
-  controller = new StreamController(
-      onListen: onListen,
-      onPause: onPause,
-      onResume: onResume,
-      onCancel: onCancel);
+  if (broadcast) {
+    controller = new StreamController.broadcast(
+        onListen: onListen,
+        onCancel: onCancel);
+  } else {
+    controller = new StreamController(
+        onListen: onListen,
+        onPause: onPause,
+        onResume: onResume,
+        onCancel: onCancel);
+  }
 
   return controller.stream;
 }

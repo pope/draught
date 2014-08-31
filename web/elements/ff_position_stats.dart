@@ -1,7 +1,5 @@
 import 'package:polymer/polymer.dart';
 import 'package:ffapp/player.dart';
-import 'package:ffapp/streams.dart';
-import 'dart:async';
 import 'dart:collection';
 
 bool _isDrafted(Player p) => p.isDrafted;
@@ -20,38 +18,30 @@ class TierSummary {
 @CustomTag('ff-position-stats')
 class FfPositionStats extends PolymerElement {
 
-  @published Iterable<Player> players;
+  @published Roster roster;
   @published Position position;
 
   @observable List<TierSummary> summary = toObservable([]);
   @observable Player nextPick;
 
-  StreamSubscription _sub;
-
   FfPositionStats.created() : super.created();
 
-  void playersChanged(o, n) => handleDataChange();
-  void positionChanged(o, n) => handleDataChange();
+  @override
+  void attached() {
+    super.attached();
 
-  void handleDataChange() {
-    if (_sub != null) {
-      _sub.cancel();
-    }
-    if (position == null || players == null) {
-      return;
-    }
     _updateSummary();
-    _sub = unify(players.map((p) => p.changes)).listen((_) => _updateSummary());
+    roster.playerChanges.listen((_) => _updateSummary());
   }
 
   // TODO(pope): This could probably be made more efficient; however it's good
-  // enough for now.
+  // enough for now...if you're using Chrome.
   void _updateSummary() {
     nextPick = null;
     summary.clear();
 
     Map<int,List<Player>> grouped = new SplayTreeMap((a, b) => a - b);
-    players.where((p) => p.position == position).forEach((p) {
+    roster.players.where((p) => p.position == position).forEach((p) {
       grouped.putIfAbsent(p.tier, () => []).add(p);
     });
     summary.addAll(grouped.keys.map((tier) {
@@ -67,7 +57,8 @@ class FfPositionStats extends PolymerElement {
         if (nextPick == null) {
           nextPick = tieredPlayers.firstWhere(_isNotDrafted);
         }
-        goneBy = players.where(_isNotDrafted).toList().indexOf(lastPlayer) + 1;
+        var allUndrafted = roster.players.where(_isNotDrafted).toList();
+        goneBy = allUndrafted.indexOf(lastPlayer) + 1;
       }
       return new TierSummary(tier, avg, remaining, goneBy);
     }));
