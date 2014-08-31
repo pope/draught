@@ -1,0 +1,32 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+<link rel="import" href="../packages/paper_elements/paper_input.html">
+<link rel="import" href="../packages/paper_elements/paper_checkbox.html">
+<link rel="import" href="ff_player.html">
+<polymer-element name="ff-player-list">
+  <template>
+    <style>
+      ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      li {
+        display: block;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <div vertical layout>
+      <div id="search" center horizontal layout>
+        <paper-input flex three label="Search" inputValue="{{ searchText }}"></paper-input>
+        <paper-checkbox flex checked="{{ filterDrafted }}" label="Ignore Drafted"></paper-checkbox>
+      </div>
+      <ol>
+        <template repeat="{{ p in players | search(searchText) }}">
+          <li hidden?="{{ filterDrafted &amp;&amp; p.isDrafted }}"><ff-player player="{{ p }}"></ff-player></li>
+        </template>
+      </ol>
+    </div>
+  </template>
+  <script type="application/dart" src="ff_player_list.dart"></script>
+</polymer-element>

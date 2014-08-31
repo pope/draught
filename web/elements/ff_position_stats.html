@@ -1,0 +1,40 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+<polymer-element name="ff-position-stats">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      h3 {
+        color: #999;
+      }
+      table {
+        line-height: 1em;
+      }
+      th {
+        color: #666;
+      }
+    </style>
+    <h3>{{ position.value }} Summary</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Avg. Points</th>
+          <th>Remaining</th>
+          <th>Gone In</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr template repeat="{{ s in summary }}">
+          <td>{{ s.tier }}</td>
+          <td>{{ s.averagePoints | toFixed(2) }}</td>
+          <td>{{ s.remaining }}</td>
+          <td>{{ s.goneBy }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Next Pick: <strong>{{ nextPick.name }}</strong></p>
+  </template>
+  <script type="application/dart" src="ff_position_stats.dart"></script>
+</polymer-element>

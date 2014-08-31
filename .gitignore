@@ -1,5 +1,6 @@
 .buildlog
-packages/
-web/packages
+packages
+build/
 *.sublime-project
 *.sublime-workspace
+.DS_Store

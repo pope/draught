@@ -1,9 +1,11 @@
 name: ffapp
 description: A sample web application
 dependencies:
-  core_elements: any
-  paper_elements: any
-  polymer: any
+  core_elements: '>=0.2.0 <0.3.0'
+  paper_elements: '>=0.1.1 <0.1.2'
+  path: any
+  polymer: '>=0.13.0 <0.14.0'
+dev_dependencies:
   unittest: any
 transformers:
 - polymer:

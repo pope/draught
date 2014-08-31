@@ -1,0 +1,30 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+<link rel="import" href="../packages/paper_elements/paper_checkbox.html">
+<polymer-element name="ff-player">
+  <template>
+    <style>
+      :host > div > p {
+        margin: 0.25em 2em;
+      }
+      :host > div > div > p {
+        margin: 0.25em 0.5em;
+      }
+      #name {
+        font-weight: 500;
+      }
+      paper-checkbox {
+        display: block;
+      }
+    </style>
+    <div center horizontal layout>
+      <div flex horizontal layout>
+        <p flex>{{ player.rank }}</p>
+        <p flex>{{ player.position.value }}</p>
+        <p flex>{{ player.projectedPoints | toFixed(2) }}</p>
+      </div>
+      <p flex two id="name">{{ player.name }}</p>
+      <paper-checkbox flex checked="{{ player.isDrafted }}" label="Draft"></paper-checkbox>
+    </div>
+  </template>
+  <script type="application/dart" src="ff_player.dart"></script>
+</polymer-element>
