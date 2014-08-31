@@ -24,28 +24,34 @@ class FfPositionStats extends PolymerElement {
   @observable List<TierSummary> summary = toObservable([]);
   @observable Player nextPick;
 
+  Map<int,List<Player>> _grouped;
+
   FfPositionStats.created() : super.created();
 
   @override
   void attached() {
     super.attached();
 
+    _grouped = new SplayTreeMap((a, b) => a - b);
+    roster.players.where((p) => p.position == position).forEach((p) {
+      _grouped.putIfAbsent(p.tier, () => []).add(p);
+    });
+
     _updateSummary();
-    roster.playerChanges.listen((_) => _updateSummary());
+    roster.playerChanges.listen((cl) {
+      if (cl.where((c) => c.object.position == position).isNotEmpty) {
+        _updateSummary();
+      }
+    });
   }
 
-  // TODO(pope): This could probably be made more efficient; however it's good
-  // enough for now...if you're using Chrome.
   void _updateSummary() {
     nextPick = null;
     summary.clear();
 
-    Map<int,List<Player>> grouped = new SplayTreeMap((a, b) => a - b);
-    roster.players.where((p) => p.position == position).forEach((p) {
-      grouped.putIfAbsent(p.tier, () => []).add(p);
-    });
-    summary.addAll(grouped.keys.map((tier) {
-      var tieredPlayers = grouped[tier];
+    var allUndrafted = roster.players.where(_isNotDrafted).toList();
+    summary.addAll(_grouped.keys.map((tier) {
+      var tieredPlayers = _grouped[tier];
       var totalPlayers = tieredPlayers.length;
       var sum = tieredPlayers.fold(0, (sum, p) => sum + p.projectedPoints);
       var avg = sum / totalPlayers;
@@ -57,7 +63,6 @@ class FfPositionStats extends PolymerElement {
         if (nextPick == null) {
           nextPick = tieredPlayers.firstWhere(_isNotDrafted);
         }
-        var allUndrafted = roster.players.where(_isNotDrafted).toList();
         goneBy = allUndrafted.indexOf(lastPlayer) + 1;
       }
       return new TierSummary(tier, avg, remaining, goneBy);
