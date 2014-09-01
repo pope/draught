@@ -1,6 +1,6 @@
-import 'package:polymer/polymer.dart';
-import 'package:ffapp/player.dart';
 import 'dart:collection';
+import 'package:draught/player.dart';
+import 'package:polymer/polymer.dart';
 
 bool _isDrafted(Player p) => p.isDrafted;
 bool _isNotDrafted(Player p) => !p.isDrafted;
@@ -15,8 +15,8 @@ class TierSummary {
       : super();
 }
 
-@CustomTag('ff-position-stats')
-class FfPositionStats extends PolymerElement {
+@CustomTag('draught-position-stats')
+class DraughtPositionStats extends PolymerElement {
 
   @published Roster roster;
   @published Position position;
@@ -26,7 +26,7 @@ class FfPositionStats extends PolymerElement {
 
   Map<int,List<Player>> _grouped;
 
-  FfPositionStats.created() : super.created();
+  DraughtPositionStats.created() : super.created();
 
   @override
   void attached() {

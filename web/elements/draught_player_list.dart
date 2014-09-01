@@ -1,14 +1,14 @@
+import 'package:draught/player.dart';
 import 'package:polymer/polymer.dart';
-import 'package:ffapp/player.dart';
 
-@CustomTag('ff-player-list')
-class FfPlayerListElement extends PolymerElement {
+@CustomTag('draught-player-list')
+class DraughtPlayerList extends PolymerElement {
 
   @published Roster roster;
   @observable bool filterDrafted = true;
   @observable String searchText = '';
 
-  FfPlayerListElement.created(): super.created();
+  DraughtPlayerList.created() : super.created();
 
   search(String text) => (Iterable<Player> players) {
     var lowerText = text.toLowerCase();

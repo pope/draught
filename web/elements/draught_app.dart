@@ -1,14 +1,14 @@
+import 'package:draught/player.dart';
 import 'package:polymer/polymer.dart';
-import 'package:ffapp/player.dart';
 
-@CustomTag('ff-app')
-class FfAppElement extends PolymerElement {
+@CustomTag('draught-app')
+class DraughtApp extends PolymerElement {
 
   @observable Roster roster;
   @observable Iterable<Position> positions = Position.values;
   @observable String errorMessage = '';
 
-  FfAppElement.created() : super.created();
+  DraughtApp.created() : super.created();
 
   @override
   void attached() {

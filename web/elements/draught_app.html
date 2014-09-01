@@ -1,9 +1,9 @@
 <link rel="import" href="../packages/paper_elements/paper_shadow.html">
 <link rel="import" href="../packages/polymer/polymer.html">
-<link rel="import" href="ff_position_stats.html">
-<link rel="import" href="ff_draft_stats.html">
-<link rel="import" href="ff_player_list.html">
-<polymer-element name="ff-app">
+<link rel="import" href="draught_draft_stats.html">
+<link rel="import" href="draught_player_list.html">
+<link rel="import" href="draught_position_stats.html">
+<polymer-element name="draught-app">
   <template>
     <style>
       :host {
@@ -30,14 +30,14 @@
       <div horizontal layout>
         <section flex>
           <paper-shadow z="1"></paper-shadow>
-          <ff-player-list flex roster="{{ roster }}"></ff-player-list>
+          <draught-player-list flex roster="{{ roster }}"></draught-player-list>
         </section>
         <aside>
           <h1>Stats</h1>
-          <ff-draft-stats roster="{{ roster }}"></ff-draft-stats>
+          <draught-draft-stats roster="{{ roster }}"></draught-draft-stats>
           <template repeat="{{ pos in positions }}">
-            <ff-position-stats position="{{ pos }}"
-                               roster="{{ roster }}"></ff-position-stats>
+            <draught-position-stats position="{{ pos }}" roster="{{ roster }}">
+            </draught-position-stats>
           </template>
         </aside>
       </div>
@@ -46,5 +46,5 @@
       Loading...
     </template>
   </template>
-  <script type="application/dart" src="ff_app.dart"></script>
+  <script type="application/dart" src="draught_app.dart"></script>
 </polymer-element>

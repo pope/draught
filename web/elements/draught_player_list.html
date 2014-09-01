@@ -1,8 +1,8 @@
-<link rel="import" href="../packages/polymer/polymer.html">
-<link rel="import" href="../packages/paper_elements/paper_input.html">
 <link rel="import" href="../packages/paper_elements/paper_checkbox.html">
-<link rel="import" href="ff_player.html">
-<polymer-element name="ff-player-list">
+<link rel="import" href="../packages/paper_elements/paper_input.html">
+<link rel="import" href="../packages/polymer/polymer.html">
+<link rel="import" href="draught_player.html">
+<polymer-element name="draught-player-list">
   <template>
     <style>
       ol {
@@ -23,10 +23,10 @@
       </div>
       <ol>
         <template repeat="{{ p in roster.players | search(searchText) }}">
-          <li hidden?="{{ filterDrafted &amp;&amp; p.isDrafted }}"><ff-player player="{{ p }}"></ff-player></li>
+          <li hidden?="{{ filterDrafted &amp;&amp; p.isDrafted }}"><draught-player player="{{ p }}"></draught-player></li>
         </template>
       </ol>
     </div>
   </template>
-  <script type="application/dart" src="ff_player_list.dart"></script>
+  <script type="application/dart" src="draught_player_list.dart"></script>
 </polymer-element>

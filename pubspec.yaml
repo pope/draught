@@ -1,5 +1,5 @@
-name: ffapp
-description: A sample web application
+name: draught
+description: A web application to aid in my fantasy football draft.
 dependencies:
   core_elements: '>=0.2.0 <0.3.0'
   paper_elements: '>=0.1.1 <0.1.2'

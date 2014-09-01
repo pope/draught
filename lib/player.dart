@@ -3,7 +3,7 @@ library player;
 import 'dart:async';
 import 'dart:convert';
 import 'dart:html' show window, HttpRequest;
-import 'package:ffapp/streams.dart';
+import 'package:draught/streams.dart';
 import 'package:polymer/polymer.dart';
 
 class Position {
@@ -61,7 +61,7 @@ class Roster {
   Roster(this.players, this.playerChanges) : super();
 }
 
-const String _name = 'ff-players';
+const String _name = 'draught-players';
 Roster _roster = null;
 
 Future<Roster> loadRoster() {

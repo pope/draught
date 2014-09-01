@@ -1,8 +1,8 @@
-import 'package:ffapp/player.dart';
+import 'package:draught/player.dart';
 import 'package:polymer/polymer.dart';
 
-@CustomTag('ff-draft-stats')
-class FfDraftStatsElement extends PolymerElement {
+@CustomTag('draught-draft-stats')
+class DraughtDraftStats extends PolymerElement {
 
   @published Roster roster;
   @observable Map<Position, int> totals = toObservable(new Map());
@@ -10,7 +10,7 @@ class FfDraftStatsElement extends PolymerElement {
   @ComputedProperty('totals.values')
   int get total => totals.values.fold(0, (a, b) => a + b);
 
-  FfDraftStatsElement.created() : super.created();
+  DraughtDraftStats.created() : super.created();
 
   @override
   void attached() {
