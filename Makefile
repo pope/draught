@@ -7,7 +7,7 @@ SHELL := /bin/bash
 .DELETE_ON_ERROR:
 .SUFFIXES:
 .ONESHELL:
-.PHONY: all server watch build-all
+.PHONY: all serve watch build-all
 .PHONY: clean really-clean
 
 NPM ?= npm
@@ -30,7 +30,7 @@ web/components: web/bower.json node_modules
 	./node_modules/bower/bin/bower install
 	touch $@
 
-server: all
+serve: all
 	./node_modules/http-server/bin/http-server web
 
 watch: all
