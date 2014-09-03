@@ -1,6 +1,7 @@
-<link rel="import" href="../packages/paper_elements/paper_checkbox.html">
-<link rel="import" href="../packages/polymer/polymer.html">
-<polymer-element name="draught-player">
+<link rel="import" href="../components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="draught-filters.html">
+<polymer-element name="draught-player" attributes="player" noscript>
   <template>
     <style>
       :host > div > p {
@@ -26,5 +27,4 @@
       <paper-checkbox flex checked="{{ player.isDrafted }}" label="Draft"></paper-checkbox>
     </div>
   </template>
-  <script type="application/dart" src="draught_player.dart"></script>
 </polymer-element>

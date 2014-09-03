@@ -4,10 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Draught • Destroy Sameer</title>
-    <script src="packages/web_components/platform.js"></script>
-    <script src="packages/web_components/dart_support.js"></script>
-    <link rel="import" href="elements/draught_app.html">
-    <link rel="import" href="packages/paper_elements/roboto.html">
+    <script src="components/platform/platform.js"></script>
+    <script src="components/promise-polyfill/Promise.min.js"></script>
+    <script src="components/uevents.js/uevents.js"></script>
+    <script src="components/lodash/dist/lodash.min.js"></script>
+    <link rel="import" href="elements/draught-app.html">
+    <link rel="import" href="components/font-roboto/roboto.html">
     <style>
       body {
         font-family: "RobotoDraft", Helvetica, Arial, sans-serif;
@@ -20,6 +22,5 @@
   </head>
   <body unresolved fullbleed vertical layout>
     <draught-app></draught-app>
-    <script type="application/dart">export 'package:polymer/init.dart';</script>
   </body>
 </html>

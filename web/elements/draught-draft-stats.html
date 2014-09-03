@@ -1,5 +1,6 @@
-<link rel="import" href="../packages/polymer/polymer.html">
-<polymer-element name="draught-draft-stats">
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="players.html">
+<polymer-element name="draught-draft-stats" attributes="roster">
   <template>
     <style>
       :host {
@@ -20,13 +21,13 @@
     </style>
     <h3>Total Drafted</h3>
     <dl>
-      <template repeat="{{ pos in totals.keys }}">
-        <dt>{{ pos.value }}</dt>
+      <template repeat="{{ pos in totals | keys() }}">
+        <dt>{{ pos }}</dt>
         <dd>{{ totals[pos] }}</dd>
       </template>
       <dt>Total</dt>
       <dd>{{ total }}</dd>
     </dl>
   </template>
-  <script type="application/dart" src="draught_draft_stats.dart"></script>
+  <script src="draught-draft-stats.js"></script>
 </polymer-element>

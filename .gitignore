@@ -1,6 +1,11 @@
-.buildlog
-packages
-build/
+*.js.map
 *.sublime-project
 *.sublime-workspace
+.buildlog
 .DS_Store
+build/
+node_modules/
+packages
+web/build.*
+web/components/
+web/elements/*.js
