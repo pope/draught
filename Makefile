@@ -7,7 +7,7 @@ SHELL := /bin/bash
 .DELETE_ON_ERROR:
 .SUFFIXES:
 .ONESHELL:
-.PHONY: all server
+.PHONY: all server watch build-all
 .PHONY: clean really-clean
 
 NPM ?= npm
@@ -33,11 +33,24 @@ web/components: web/bower.json node_modules
 server: all
 	./node_modules/http-server/bin/http-server web
 
+watch: all
+	cd web && ../node_modules/coffee-script/bin/coffee -mcw .
+
 web/build.html web/build.js: web/components $(jsfiles) $(htmlfiles)
 %/build.html %/build.js: web/index.html
 	./node_modules/vulcanize/bin/vulcanize -o $@  --csp --inline -s $<
 
+build:
+	mkdir -p $@
+build/index.html: web/build.html | build
+	cp $< $@
+build/build.js: web/build.js | build
+	cp $< $@
+build/2014-draft-info.json: web/2014-draft-info.json | build
+	cp $< $@
+build-all: build/index.html build/build.js build/2014-draft-info.json
+
 clean:
-	-rm web/build.html web/build.js $(jsfiles) $(jsmapfiles)
+	-rm -rf web/build.html web/build.js $(jsfiles) $(jsmapfiles) build
 really-clean: clean
 	-rm -rf node_modules web/components
