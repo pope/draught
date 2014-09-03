@@ -21,9 +21,9 @@
     </style>
     <h3>Total Drafted</h3>
     <dl>
-      <template repeat="{{ pos in totals | keys() }}">
-        <dt>{{ pos }}</dt>
-        <dd>{{ totals[pos] }}</dd>
+      <template repeat="{{ stat in stats }}">
+        <dt>{{ stat.position }}</dt>
+        <dd>{{ stat.totalDrafted }}</dd>
       </template>
       <dt>Total</dt>
       <dd>{{ total }}</dd>

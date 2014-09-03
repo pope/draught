@@ -1,24 +1,32 @@
+class PositionStats
+  constructor: (@position, @totalDrafted) ->
+
 Polymer 'draught-draft-stats',
   roster: null
-  computed:
-    total: 'updateTotal_(totals)'
+  total: 0
 
   created: () ->
-    @totals = {}
+    @stats = []
 
   attached: () ->
-    _.forEach draught.players.Position.values(), (v) => @totals[v] = 0
-    _.chain @roster.players
-      .where (p) -> p.isDrafted
-      .forEach (p) => @totals[p.position]++
-    @totals = _.clone(@totals)
+    positions = draught.players.Position.values()
+    defaults = _.reduce positions, ((obj, v) -> obj[v] = 0; obj), {}
+    @stats = _.chain @roster.players
+      .filter 'isDrafted'
+      .groupBy 'position'
+      .mapValues 'length'
+      .defaults defaults
+      .transform ((res, num, key) -> res.push new PositionStats(key, num)), []
+      .sort (a, b) ->
+        _.indexOf(positions, a.position) - _.indexOf(positions, b.position)
+      .valueOf()
+    @total = _.reduce @stats, ((sum, s) -> sum + s.totalDrafted), 0
     @roster.playerChangesListen (players) =>
       _.forEach players, (p) =>
+        stat = _.find @stats, (s) => s.position == p.position
         if p.isDrafted
-          @totals[p.position]++
+          @total++
+          stat.totalDrafted++
         else
-          @totals[p.position]--
-      @totals = _.clone(@totals)
-
-  updateTotal_: (totals) ->
-    _.reduce _.values(totals), ((a, b) -> a + b), 0
+          @total--
+          stat.totalDrafted--
