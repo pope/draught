@@ -42,7 +42,8 @@ class Roster
     obs = new CompoundObserver
     _.forEach @players, (p) -> obs.addPath(p, 'isDrafted')
     obs.open (newVals, oldVals) =>
-      changes = _.map _.keys(oldVals), (k) => @players[k]
+      changes = for i, val of oldVals
+        @players[i]
       @ue.trigger 'changed', changes
 
   playerChangesListen: (callback, context) ->

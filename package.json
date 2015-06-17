@@ -2,11 +2,12 @@
   "name": "draught",
   "private": true,
   "dependencies": {
-    "bower": "^1.3.9",
-    "coffee-script": "^1.8.0",
-    "vulcanize": "^0.4.2"
+    "bower": "^1.4.1",
+    "coffee-script": "^1.9.3",
+    "crisper": "^1.0.3",
+    "vulcanize": "^1.9.2"
   },
   "devDependencies": {
-    "http-server": "^0.6.1"
+    "http-server": "^0.8.0"
   }
 }

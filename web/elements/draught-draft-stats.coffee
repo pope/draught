@@ -1,12 +1,13 @@
 class PositionStats
   constructor: (@position, @totalDrafted) ->
 
-Polymer 'draught-draft-stats',
-  roster: null
-  total: 0
+Polymer
+  is: 'draught-draft-stats'
 
-  created: () ->
-    @stats = []
+  properties:
+    roster: Object
+    total: Number
+    stats: Array
 
   attached: () ->
     positions = draught.players.Position.values()
@@ -23,10 +24,12 @@ Polymer 'draught-draft-stats',
     @total = _.reduce @stats, ((sum, s) -> sum + s.totalDrafted), 0
     @roster.playerChangesListen (players) =>
       _.forEach players, (p) =>
-        stat = _.find @stats, (s) => s.position == p.position
+        idx = _.findIndex @stats, (s) => s.position == p.position
+        stat = @stats[idx]
         if p.isDrafted
           @total++
           stat.totalDrafted++
         else
           @total--
           stat.totalDrafted--
+        this.notifyPath("stats.#{idx}.totalDrafted", stat.totalDrafted);

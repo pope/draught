@@ -1,33 +1,38 @@
-<link rel="import" href="../components/polymer/polymer.html">
 <link rel="import" href="players.html">
-<polymer-element name="draught-draft-stats" attributes="roster">
+
+<link rel="import" href="../components/polymer/polymer.html">
+
+<dom-module id="draught-draft-stats">
+  <style>
+    :host {
+      display: block;
+    }
+    dl {
+      font-size: 0.8em;
+    }
+    dt {
+      font-weight: 500;
+    }
+    dd {
+      margin: 0 1em 0 0.25em;
+    }
+    dd, dt {
+      display: inline-block;
+    }
+    h3 {
+      color: #999;
+    }
+  </style>
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-      dt {
-        font-weight: 500;
-      }
-      dd {
-        margin: 0 1em 0 0.25em;
-      }
-      dd, dt {
-        display: inline-block;
-      }
-      h3 {
-        color: #999;
-      }
-    </style>
     <h3>Total Drafted</h3>
     <dl>
-      <template repeat="{{ stat in stats }}">
-        <dt>{{ stat.position }}</dt>
-        <dd>{{ stat.totalDrafted }}</dd>
+      <template is="dom-repeat" items="{{stats}}">
+        <dt>{{item.position}}</dt>
+        <dd>{{item.totalDrafted}}</dd>
       </template>
       <dt>Total</dt>
-      <dd>{{ total }}</dd>
+      <dd>{{total}}</dd>
     </dl>
   </template>
-  <script src="draught-draft-stats.js"></script>
-</polymer-element>
+</dom-module>
+<script src="draught-draft-stats.js"></script>

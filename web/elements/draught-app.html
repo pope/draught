@@ -1,51 +1,61 @@
-<link rel="import" href="../components/paper-shadow/paper-shadow.html">
-<link rel="import" href="../components/polymer/polymer.html">
 <link rel="import" href="draught-draft-stats.html">
 <link rel="import" href="draught-player-list.html">
 <link rel="import" href="draught-position-stats.html">
 <link rel="import" href="players.html">
-<polymer-element name="draught-app">
+
+<link rel="import" href="../components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../components/paper-material/paper-material.html">
+<link rel="import" href="../components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../components/polymer/polymer.html">
+
+<dom-module id="draught-app">
+  <style>
+    :host {
+      width: 90%;
+      margin: 1em auto;
+      display: block;
+    }
+
+    [roster] {
+      @apply(--layout-horizontal);
+    }
+    paper-material {
+      @apply(--layout-flex);
+      background-color: #fff;
+      padding: 1em;
+      margin: 1em;
+    }
+    aside {
+      padding: 1em;
+    }
+
+    paper-spinner {
+      display: block;
+      margin: 0 auto;
+    }
+
+  </style>
   <template>
-    <style>
-      :host {
-        width: 90%;
-        margin: 1em auto;
-        display: block;
-      }
-      section {
-        background-color: #fff;
-        display: block;
-        padding: 1em;
-        margin: 1em;
-        position: relative;
-      }
-      aside {
-        padding: 1em;
-      }
-      aside /deep/ dl,
-      aside /deep/ table {
-        font-size: 0.8em;
-      }
-    </style>
-    <template bind if="{{ roster != null }}">
-      <div horizontal layout>
-        <section flex>
-          <paper-shadow z="1"></paper-shadow>
-          <draught-player-list flex roster="{{ roster }}"></draught-player-list>
-        </section>
+    <template is="dom-if" if="{{roster}}">
+      <div roster>
+        <paper-material elevation="1">
+          <draught-player-list roster="{{roster}}"></draught-player-list>
+        </paper-material>
         <aside>
           <h1>Stats</h1>
-          <draught-draft-stats roster="{{ roster }}"></draught-draft-stats>
-          <template repeat="{{ pos in positions }}">
-            <draught-position-stats position="{{ pos }}" roster="{{ roster }}">
+          <draught-draft-stats roster="{{roster}}"></draught-draft-stats>
+          <template is="dom-repeat" items="{{positions}}">
+            <draught-position-stats position="{{item}}" roster="{{roster}}">
             </draught-position-stats>
           </template>
         </aside>
       </div>
     </template>
-    <template bind if="{{ roster == null }}">
-      Loading...
-    </template>
+    <div hidden$="{{roster}}">
+      <!-- TODO(pope): Drop the parent div when
+           https://github.com/PolymerElements/paper-spinner/issues/18 is released. -->
+      <paper-spinner active></paper-spinner>
+    </div>
   </template>
-  <script src="draught-app.js"></script>
-</polymer-element>
+</dom-module>
+<script src="draught-app.js"></script>

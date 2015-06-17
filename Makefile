@@ -38,7 +38,8 @@ watch: all
 
 web/build.html web/build.js: web/components $(jsfiles) $(htmlfiles)
 %/build.html %/build.js: web/index.html
-	./node_modules/vulcanize/bin/vulcanize -o $@  --csp --inline -s $<
+	./node_modules/vulcanize/bin/vulcanize --inline-scripts --inline-css --strip-comments $< |\
+	./node_modules/crisper/bin/crisper --html web/build.html --js web/build.js
 
 build:
 	mkdir -p $@

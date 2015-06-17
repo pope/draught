@@ -1,35 +1,52 @@
-<link rel="import" href="../components/paper-checkbox/paper-checkbox.html">
-<link rel="import" href="../components/paper-input/paper-input.html">
-<link rel="import" href="../components/polymer/polymer.html">
 <link rel="import" href="draught-player.html">
-<polymer-element name="draught-player-list" attributes="roster">
+
+<link rel="import" href="../components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="../components/paper-input/paper-input.html">
+<link rel="import" href="../components/paper-checkbox/paper-checkbox.html">
+
+<dom-module id="draught-player-list">
+  <style>
+    [search] {
+      @apply(--layout-horizontal);
+      @apply(--layout-end);
+      @apply(--layout-center-justified);
+      margin-bottom: 1em;
+    }
+    paper-input {
+      @apply(--layout-flex-3);
+      margin-right: 4em;
+    }
+    paper-checkbox {
+      @apply(--layout-flex);
+      margin-bottom: 0.5em;
+    }
+
+    ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    li {
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+
+    [filtered] > [drafted] {
+      display: none;
+    }
+  </style>
   <template>
-    <style>
-      ol {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-      li {
-        display: block;
-        margin: 0;
-        padding: 0;
-      }
-      paper-input {
-        margin-right: 4em;
-      }
-    </style>
-    <div vertical layout>
-      <div id="search" center horizontal layout>
-        <paper-input flex three label="Search" inputValue="{{ searchText }}"></paper-input>
-        <paper-checkbox flex checked="{{ filterDrafted }}" label="Ignore Drafted"></paper-checkbox>
-      </div>
-      <ol>
-        <template repeat="{{ p in roster.players | search(searchText) }}">
-          <li hidden?="{{ filterDrafted &amp;&amp; p.isDrafted }}"><draught-player player="{{ p }}"></draught-player></li>
-        </template>
-      </ol>
+    <div search>
+      <paper-input label="Search" value="{{searchText::input}}"></paper-input>
+      <paper-checkbox checked="{{filterDrafted::change}}">Ignore Drafted</paper-checkbox>
     </div>
+    <ol filtered$="{{filterDrafted}}">
+      <template is="dom-repeat" items="{{search(roster.players, searchText)}}">
+        <li drafted$="{{item.isDrafted}}"><draught-player player="{{item}}"></draught-player></li>
+      </template>
+    </ol>
   </template>
-  <script src="draught-player-list.js"></script>
-</polymer-element>
+</dom-module>
+<script src="draught-player-list.js"></script>

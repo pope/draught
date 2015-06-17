@@ -1,8 +1,16 @@
-Polymer 'draught-app',
-  roster: null
-  positions: draught.players.Position.values()
-  errorMessage: ''
+Polymer
+  is: 'draught-app'
+
+  properties:
+    roster: Object
+    positions:
+      value: draught.players.Position.values()
+    errorMessage:
+      value: ''
+
   attached: () ->
     draught.players.loadRoster()
       .then (r) => @roster = r
-      .catch (e) => @errorMessage = e
+      .catch (e) =>
+        console.error e
+        @errorMessage = e

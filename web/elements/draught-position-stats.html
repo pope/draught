@@ -1,21 +1,20 @@
 <link rel="import" href="../components/polymer/polymer.html">
-<polymer-element name="draught-position-stats" attributes="roster position">
+
+<dom-module id="draught-position-stats">
+  <style>
+    :host {
+      display: block;
+    }
+    h3, th {
+      color: #999;
+    }
+    table {
+      line-height: 1em;
+      font-size: 0.8em;
+    }
+  </style>
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-      h3 {
-        color: #999;
-      }
-      table {
-        line-height: 1em;
-      }
-      th {
-        color: #666;
-      }
-    </style>
-    <h3>{{ position.value }} Summary</h3>
+    <h3><span>{{position}}</span> Summary</h3>
     <table>
       <thead>
         <tr>
@@ -26,15 +25,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr template repeat="{{ s in summary }}">
-          <td>{{ s.tier }}</td>
-          <td>{{ s.averagePoints | toFixed(2) }}</td>
-          <td>{{ s.remaining }}</td>
-          <td>{{ s.goneBy }}</td>
-        </tr>
+        <template is="dom-repeat" items="{{summary}}">
+          <tr>
+            <td>{{item.tier}}</td>
+            <td>{{toFixed(item.averagePoints, 2)}}</td>
+            <td>{{item.remaining}}</td>
+            <td>{{item.goneBy}}</td>
+          </tr>
+        </template>
       </tbody>
     </table>
-    <p>Next Pick: <strong>{{ nextPick.name }}</strong></p>
+    <p>Next Pick: <strong>{{nextPick.name}}</strong></p>
   </template>
-  <script src="draught-position-stats.js"></script>
-</polymer-element>
+</dom-module>
+<script src="draught-position-stats.js"></script>

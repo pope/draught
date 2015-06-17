@@ -4,13 +4,16 @@ class TierSummary
 isDrafted = (p) => p.isDrafted
 isNotDrafted = (p) => !p.isDrafted
 
-Polymer 'draught-position-stats',
-  roster: null
-  position: ''
-  nextPick: null
+Polymer
+  is: 'draught-position-stats'
 
-  created: () ->
-    @summary = []
+  properties:
+    roster: Object
+    position: String
+    nextPick: Object
+    summary:
+      type: Array
+      value: () -> []
 
   attached: () ->
     @grouped_ = _.chain @roster.players
@@ -40,3 +43,7 @@ Polymer 'draught-position-stats',
         new TierSummary tier, avg, remaining, goneBy
       .sort (a, b) -> a.tier - b.tier
       .valueOf()
+
+  # TODO(pope): Maybe move to a filters mixin.
+  toFixed: (num, precision) ->
+    num.toFixed precision
