@@ -1,0 +1,50 @@
+<link rel="import" href="../packages/paper_elements/paper_shadow.html">
+<link rel="import" href="../packages/polymer/polymer.html">
+<link rel="import" href="ff_position_stats.html">
+<link rel="import" href="ff_draft_stats.html">
+<link rel="import" href="ff_player_list.html">
+<polymer-element name="ff-app">
+  <template>
+    <style>
+      :host {
+        width: 90%;
+        margin: 1em auto;
+        display: block;
+      }
+      section {
+        background-color: #fff;
+        display: block;
+        padding: 1em;
+        margin: 1em;
+        position: relative;
+      }
+      aside {
+        padding: 1em;
+      }
+      aside /deep/ dl,
+      aside /deep/ table {
+        font-size: 0.8em;
+      }
+    </style>
+    <template bind if="{{ roster != null }}">
+      <div horizontal layout>
+        <section flex>
+          <paper-shadow z="1"></paper-shadow>
+          <ff-player-list flex roster="{{ roster }}"></ff-player-list>
+        </section>
+        <aside>
+          <h1>Stats</h1>
+          <ff-draft-stats roster="{{ roster }}"></ff-draft-stats>
+          <template repeat="{{ pos in positions }}">
+            <ff-position-stats position="{{ pos }}"
+                               roster="{{ roster }}"></ff-position-stats>
+          </template>
+        </aside>
+      </div>
+    </template>
+    <template bind if="{{ roster == null }}">
+      Loading...
+    </template>
+  </template>
+  <script type="application/dart" src="ff_app.dart"></script>
+</polymer-element>

@@ -1,0 +1,15 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+<link rel="import" href="my_item.html">
+<polymer-element name="my-filtered-list">
+  <template>
+      <h3>Unchecked Items</h3>
+      <template bind repeat="{{item in items | hideChecked}}">
+        <my-item item="{{item}}"></my-item>
+      </template>
+      <h3>Checked Items</h3>
+      <template bind repeat="{{item in items | hideUnchecked}}">
+        <my-item item="{{item}}"></my-item>
+      </template>
+    </template>
+  <script type="application/dart" src="my_filtered_list.dart"></script>
+</polymer-element>

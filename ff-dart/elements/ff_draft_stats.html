@@ -1,0 +1,32 @@
+<link rel="import" href="../packages/polymer/polymer.html">
+<polymer-element name="ff-draft-stats">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      dt {
+        font-weight: 500;
+      }
+      dd {
+        margin: 0 1em 0 0.25em;
+      }
+      dd, dt {
+        display: inline-block;
+      }
+      h3 {
+        color: #999;
+      }
+    </style>
+    <h3>Total Drafted</h3>
+    <dl>
+      <template repeat="{{ pos in totals.keys }}">
+        <dt>{{ pos.value }}</dt>
+        <dd>{{ totals[pos] }}</dd>
+      </template>
+      <dt>Total</dt>
+      <dd>{{ total }}</dd>
+    </dl>
+  </template>
+  <script type="application/dart" src="ff_draft_stats.dart"></script>
+</polymer-element>
